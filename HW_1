@@ -31,6 +31,20 @@ wage1 <- read_dta("http://fmwww.bc.edu/ec-p/data/wooldridge/wage1.dta")
 
 2. 請使用`psych::pairs.panels()`來描述教育年限(educ)與勞動薪資(wage)間的特質。在兩者的相關度上，有沒有那個變數取對數(log)會比較好？為什麼？
 
+```{r}
+library(psych)
+wage1 %>% 
+  select(educ,wage) %>%
+  pairs.panels()
+```
+```{r}
+wage1 %>% 
+  dplyr::select(educ,wage) %>%
+  dplyr::mutate_all(log) %>%
+  pairs.panels()
+```
+教育年限取對數後分配會不接近常態不會比較好，而勞動薪資取對數後會趨近常態非配，沒有相關係數。
+
 3. 請使用OLS估計以下的迴歸模型：
 $$log(wage)=\beta_0+\beta_1 educ+\epsilon$$
 
